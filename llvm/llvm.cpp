@@ -1,7 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <math.h>
-#include <stdio.h>
 #include "llvm.h"
 
 
@@ -48,9 +47,7 @@ void llvm_run(uint8_t *begin, uint8_t *end, float **stack_pointer) {
       }
       case SDR: {
         llvm_register reg = (llvm_register) *(pc++);
-        printf("reg: %d\n", reg);
         float val = *(--(*stack_pointer));
-        //float val = *(*(--stack_pointer));
         registers[reg] = val;
         break;
       }
