@@ -1,9 +1,9 @@
 .PHONY: all clean
 CFLAGS=-g -Wall -Wextra
 LDFLAGS=-lm
-CC=gcc
+CC=g++
 
-%.o: %.c
+%.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 test: test.o llvm.o
