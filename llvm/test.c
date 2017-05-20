@@ -27,7 +27,9 @@ int main() {
   float *stack_pointer = stack;
   llvm_run(code, cursor, &stack_pointer);
 
-  printf("result: %f\n", stack[0]);
-  assert(stack[0] == 3.0f);
+  float result = *(stack_pointer - 1);
+  printf("stack size: %li", stack_pointer - stack);
+  printf("result: %f\n", result);
+  assert(result == 3.0f);
       
 }
