@@ -13,3 +13,4 @@ test: test.o llvm.o
 clean:
 	rm -rf llvm
 	rm -rf *.o
+	rm -rf test

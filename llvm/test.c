@@ -4,21 +4,6 @@
 #include <stddef.h>
 #include <assert.h>
 
-
-void push_op(uint8_t **code, opcode opcode) {
-  *((*code)++) = (uint8_t) opcode;
-}
-
-void push_float(uint8_t **code, float val) {
-  union { float f; uint8_t b[sizeof(float)]; } src;
-  src.f = val;
-
-  for (size_t i = 0; i < sizeof(float); i++) {
-    *((*code)++) = src.b[i];
-  }
-
-}
-
 int main() {
   float stack[4];
 
@@ -26,11 +11,11 @@ int main() {
 
   uint8_t *cursor = code;
 
-  push_op(&cursor, Push);
-  push_float(&cursor, 1.0f);
-  push_op(&cursor, Push);
-  push_float(&cursor, 2.0f);
-  push_op(&cursor, Add);
+  llvm_code_op(&cursor, Push);
+  llvm_code_float(&cursor, 1.0f);
+  llvm_code_op(&cursor, Push);
+  llvm_code_float(&cursor, 2.0f);
+  llvm_code_op(&cursor, Add);
 
   printf("len = %li\n", cursor - code);
 
@@ -39,7 +24,8 @@ int main() {
   }
   printf("\n");
 
-  run(code, cursor, stack);
+  float *stack_pointer = stack;
+  llvm_run(code, cursor, &stack_pointer);
 
   printf("result: %f\n", stack[0]);
   assert(stack[0] == 3.0f);

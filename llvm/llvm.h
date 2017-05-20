@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-typedef enum opcode {
+typedef enum llvm_opcode {
   Push = 0,
   Dup,
   Add,
@@ -10,6 +10,11 @@ typedef enum opcode {
   Mul,
   Div,
   Sin,
-} opcode;
+} llvm_opcode;
 
-void run(uint8_t *begin, uint8_t *end, float *stack);
+
+// program builder helpers
+void llvm_code_op(uint8_t **code, llvm_opcode opcode);
+void llvm_code_float(uint8_t **code, float val);
+
+void llvm_run(uint8_t *begin, uint8_t *end, float **top);
