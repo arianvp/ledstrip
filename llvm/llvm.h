@@ -26,6 +26,7 @@ typedef enum llvm_opcode {
   MUL = 6,
   DIV = 7,
   SIN = 8,
+  SWP = 9, // swaps the two latest values on the stack
 } llvm_opcode;
 
 

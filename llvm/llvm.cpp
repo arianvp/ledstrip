@@ -56,6 +56,13 @@ void llvm_run(uint8_t *begin, uint8_t *end, float **stack_pointer) {
       case SUB: DO_BINARY(-, stack_pointer); break;
       case DIV: DO_BINARY(/, stack_pointer); break;
       case SIN: DO_UNARY(sin, stack_pointer); break;
+      case SWP: {
+        float a = *(--(*stack_pointer));
+        float b = *(--(*stack_pointer));
+        *((*stack_pointer)++) = a;
+        *((*stack_pointer)++) = b;
+        break;
+      }
       default: break;
     }
   }

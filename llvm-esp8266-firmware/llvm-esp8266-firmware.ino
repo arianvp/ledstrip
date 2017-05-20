@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <NeoPixelBus.h>
 
-const uint16_t PixelCount = 100;
+const uint16_t PixelCount = 151;
 const size_t ProgramSize = 256;
 const size_t StackSize = 256;
 
@@ -29,22 +29,42 @@ void setup() {
 
 }
 
+void trippy(uint8_t **cursor) {
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 0.05f);
+  llvm_code_op(cursor, MUL);
+  llvm_code_op(cursor, MUL);
+  llvm_code_op(cursor, SIN);
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 0.5f);
+  llvm_code_op(cursor, MUL);
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 0.5f);
+  llvm_code_op(cursor, ADD);
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 1.0f);
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 0.5f);
+}
+
+void cycle(uint8_t **cursor) {
+  // h = sin (0.5*t - 0.05*i);
+  // s = 1.0f;
+  // b = 0.5f;
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 0.05f);
+  llvm_code_op(cursor, MUL);
+  llvm_code_op(cursor, SWP);
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 0.5f);
+  llvm_code_op(cursor, MUL);
+  llvm_code_op(cursor, SUB);
+  llvm_code_op(cursor, SIN);
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 1.0f);
+  llvm_code_op(cursor, LDC); llvm_code_float(cursor, 1.0f);
+}
+
 void loop() {
   uint8_t *cursor = program;
-  llvm_code_op(&cursor, MUL);
-  llvm_code_op(&cursor, SIN);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 0.5f);
-  llvm_code_op(&cursor, MUL);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 0.5f);
-  llvm_code_op(&cursor, ADD);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 1.0f);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 0.5f);
 
-
+  cycle(&cursor);
   float time_seconds = millis() / 1000.0f;
   for (uint16_t i = 0; i < PixelCount; i++) {
     program_stack[0] = time_seconds;
-    program_stack[1] = i * 0.05f;
+    program_stack[1] = i;
 
     float *stack_pointer = program_stack + 2;
 
