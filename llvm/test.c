@@ -14,12 +14,12 @@ int main() {
 
   llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 3.33f);
   llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 15.0f);
-  llvm_code_op(&cursor, MUL);
-  llvm_code_op(&cursor, SIN);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 255.0f / 2.0f);
-  llvm_code_op(&cursor, MUL);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 255.0f / 2.0f);
+  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 3.33f);
+  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 15.0f);
+  llvm_code_op(&cursor, SDR); llvm_code_reg(&cursor, B);
   llvm_code_op(&cursor, ADD);
+
+  
 
   printf("len = %li\n", cursor - code);
 
@@ -34,6 +34,6 @@ int main() {
   float result = *(stack_pointer - 1);
   printf("stack size: %li", stack_pointer - stack);
   printf("result: %f\n", result);
-  assert(result == sin(3.33f) * (255.0f / 2.0f) + (255.0f / 2.0f) );
+  assert(result == 3.33f + 15.0f);
       
 }

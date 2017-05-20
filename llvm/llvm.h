@@ -10,13 +10,10 @@
 // some utility registers. Upto 32.  In the future, we could perhaps expose
 // the Stack Pointer and whatnot but for now that seems totally overkill
 typedef enum llvm_register {
-  R = 0,
-  G = 1,
-  B = 2,
-  H = 0,
-  S = 1,
-  V = 2,
-  L = 2,
+  A = 0,
+  B = 1,
+  C = 2,
+
 } llvm_register;
 
 typedef enum llvm_opcode {
