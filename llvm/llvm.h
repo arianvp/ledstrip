@@ -7,6 +7,9 @@
 
 #include <stdint.h>
 
+extern "C" {
+
+/*
 // some utility registers. Upto 32.  In the future, we could perhaps expose
 // the Stack Pointer and whatnot but for now that seems totally overkill
 typedef enum llvm_register {
@@ -14,19 +17,20 @@ typedef enum llvm_register {
   B = 1,
   C = 2,
 
-} llvm_register;
+} llvm_register;*/
 
 typedef enum llvm_opcode {
-  LDC = 0,  // load constant value onto stack
-  LDR = 1,  // load value from register onto stack
-  SDR = 2,  // pop the top of the stack into a register
-  DUP = 3,  // convenience: duplicates the top of the stack
-  ADD = 4,
-  SUB = 5,
-  MUL = 6,
-  DIV = 7,
-  SIN = 8,
-  SWP = 9, // swaps the two latest values on the stack
+  BRK = 0,
+  LDC = 1,  // load constant value onto stack
+  LDR = 2,  // load value from register onto stack
+  SDR = 3,  // pop the top of the stack into a register
+  DUP = 4,  // convenience: duplicates the top of the stack
+  ADD = 5,
+  SUB = 6,
+  MUL = 7,
+  DIV = 8,
+  SIN = 9,
+  SWP = 10, // swaps the two latest values on the stack
 } llvm_opcode;
 
 
@@ -36,3 +40,5 @@ void llvm_code_float(uint8_t **code, float val);
 void llvm_code_reg(uint8_t **code, uint8_t val);
 
 void llvm_run(uint8_t *begin, uint8_t *end, float **top);
+
+};

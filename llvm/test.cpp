@@ -29,12 +29,7 @@ int main() {
 
   uint8_t *cursor = code;
 
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 3.33f);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 15.0f);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 3.33f);
-  llvm_code_op(&cursor, LDC); llvm_code_float(&cursor, 15.0f);
-  llvm_code_op(&cursor, SDR); llvm_code_reg(&cursor, B);
-  llvm_code_op(&cursor, ADD);
+
 
   
 
