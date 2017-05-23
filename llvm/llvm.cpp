@@ -6,6 +6,7 @@
 
 # define DO_UNARY(fn, stack) do { float a = *(--(*stack)); *((*stack)++) = fn(a); } while (0)
 # define DO_BINARY(op, stack) do { float b = *(--(*stack)); float a = *(--(*stack)); *((*stack)++) = a op b; } while (0)
+# define DO_BINARYF(op, stack) do { float b = *(--(*stack)); float a = *(--(*stack)); *((*stack)++) = op(a,b); } while (0)
 
 extern "C" {
 void llvm_code_op(uint8_t **code, llvm_opcode opcode) {
@@ -19,12 +20,11 @@ void llvm_code_float(uint8_t **code, float val) {
     *((*code)++) = src.b[i];
   }
 }
-void llvm_code_reg(uint8_t **code, uint8_t val) {
+void llvm_code_uint8_t(uint8_t **code, uint8_t val) {
   *((*code)++) = val;
 }
 
 void llvm_run(uint8_t *begin, uint8_t *end, float **stack_pointer) {
-  /*float registers[32];*/
   uint8_t *pc = begin;
   bool running = true;
   while (pc != end && running) {
@@ -39,35 +39,18 @@ void llvm_run(uint8_t *begin, uint8_t *end, float **stack_pointer) {
         *((*stack_pointer)++) = dest.f;
         break;
       }
-      /*case LDR: {
-        llvm_register reg = (llvm_register) *(pc++);
-        float val = registers[reg];
+      case LDS: {
+        uint8_t offset = *(pc++); 
+        float val = *((*stack_pointer) - offset - 1);
         *((*stack_pointer)++) = val;
         break;
-      }*/
-      case DUP: {
-        float a = *((*stack_pointer) - 1);
-        *((*stack_pointer)++) = a;
-        break;
       }
-      /*case SDR: {
-        llvm_register reg = (llvm_register) *(pc++);
-        float val = *(--(*stack_pointer));
-        registers[reg] = val;
-        break;
-      }*/
       case ADD: DO_BINARY(+, stack_pointer); break;
       case MUL: DO_BINARY(*, stack_pointer); break;
       case SUB: DO_BINARY(-, stack_pointer); break;
       case DIV: DO_BINARY(/, stack_pointer); break;
       case SIN: DO_UNARY(sin, stack_pointer); break;
-      case SWP: {
-        float a = *(--(*stack_pointer));
-        float b = *(--(*stack_pointer));
-        *((*stack_pointer)++) = a;
-        *((*stack_pointer)++) = b;
-        break;
-      }
+      case MIN: DO_BINARYF(fmin, stack_pointer); break;
       default: break;
     }
   }

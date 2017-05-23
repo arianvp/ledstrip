@@ -8,7 +8,6 @@ CC=g++
 
 test: test.o llvm.o
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
-	./test
 
 clean:
 	rm -rf llvm
