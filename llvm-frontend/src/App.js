@@ -22,7 +22,7 @@ const Routes = (props) => (
     </div>
   </Router>
 );
-const theme = getMuiTheme(lightBaseTheme);
+const theme = getMuiTheme(darkBaseTheme);
 
 const AppStyle = {
   position: "absolute",

@@ -14,6 +14,7 @@ import {Link} from 'react-router-dom';
 import {GridList, GridTile} from 'material-ui/GridList';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import LLVMPreview from './LLVMPreview';
 
 const NewLight = (props) => (
   <div>
@@ -61,6 +62,7 @@ const Light = (props) => (
       <MenuItem label="lol" value={3}><img style={{width: "320px"}} src="/images/cycle.jpg" /></MenuItem>
       <MenuItem label="derp" value={4}><img style={{width: "320px"}} src="/images/cycle.jpg" /></MenuItem>
     </DropDownMenu>
+    <LLVMPreview width={200}  height={200} />
   </div>
 );
 
