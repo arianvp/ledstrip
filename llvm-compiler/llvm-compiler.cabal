@@ -1,0 +1,25 @@
+name:                  llvm-compiler
+version:               0.0.5.0
+build-type:            Custom
+cabal-version:         >= 1.20
+
+custom-setup
+  setup-depends:       base >=4.9 && <5
+                     , uuagc >=0.9 && <1
+                     , uuagc-cabal >= 1.0.6.0 && <2
+                     , Cabal >=1.20 && <2
+
+library
+  build-depends:       base, text , bytestring
+                     , uuagc-cabal >= 1.0.6.0 && <2
+  exposed-modules:     LLVM.Assembly
+                     , LLVM.Bytecode
+  default-language:    Haskell2010
+  hs-source-dirs:      src
+
+executable llvm
+  main-is:             Main.hs
+  build-depends:       base, llvm-compiler
+                     , uuagc-cabal >= 1.0.6.0 && <2
+  hs-source-dirs:      app
+  default-language:    Haskell2010
