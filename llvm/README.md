@@ -5,9 +5,10 @@ is a minimal virtual machine for writing animations for led strips.
 
 
 ## Machines
-`typedef f32le < a little endian IEEE 32 bit float>`
-`stack : List f32le`
-`opcode : u8`
+```
+typedef f32le < a little endian IEEE 32 bit float>
+stack : List f32le
+opcode : u8```
 
 ## Instruction set
 
