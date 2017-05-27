@@ -67,12 +67,21 @@ opcode : u8
 ### HSB
 * opcode: `00`
 * args: `none`
-* behaviour:  hsb (r:g:b:stack) = let (h,s,b) = rgb2hsb(r,g,b) in h:s:v:stack
+* behaviour:
+  ```
+  hsb (r:g:b:stack) = let (h,s,b) = rgb2hsb(r,g,b) in h:s:v:stack
+  ```
 ### HSL
 * opcode: `00`
 * args: `none`
-* behaviour:  hsb (r:g:b:stack) = let (h,s,b) = rgb2hsl(r,g,b) in h:s:v:stack
+* behaviour:
+  ```
+  hsb (r:g:b:stack) = let (h,s,b) = rgb2hsl(r,g,b) in h:s:v:stack
+  ```
 ### RGB
 * opcode: `00`
 * args: `none`
-* behaviour: rgb stack = stack
+* behaviour:
+  ```
+  rgb stack = stack
+  ```
